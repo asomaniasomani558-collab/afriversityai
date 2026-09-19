@@ -1,0 +1,206 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Scholar user profile and heritage ranking data",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Firebase Auth UID of scholar" },
+        "email": { "type": "string", "description": "Academic email address" },
+        "displayName": { "type": "string", "description": "Full name" },
+        "role": { "type": "string", "description": "Scholar discipline role" },
+        "university": { "type": "string", "description": "University or institution" },
+        "location": { "type": "string", "description": "City and Country" },
+        "bio": { "type": "string", "description": "Bio summary" },
+        "avatar": { "type": "string", "description": "Avatar image URL" },
+        "heritageScore": { "type": "number", "description": "Heritage score (0-100)" },
+        "heritageTier": { "type": "string", "description": "Tier ranking" },
+        "securityLevel": { "type": "string", "description": "Security audit status" },
+        "createdAt": { "type": "string", "description": "Creation ISO date" },
+        "updatedAt": { "type": "string", "description": "Updated ISO date" }
+      },
+      "required": ["uid", "email", "displayName"]
+    },
+    "Presence": {
+      "title": "Presence",
+      "description": "User online presence tracking",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "User ID" },
+        "userName": { "type": "string", "description": "User display name" },
+        "status": { "type": "string", "enum": ["online", "away", "offline"], "description": "Presence state" },
+        "lastActiveText": { "type": "string", "description": "Human readable presence label" },
+        "lastSeen": { "type": "number", "description": "Epoch timestamp" },
+        "updatedAt": { "type": "string", "description": "Server timestamp" }
+      },
+      "required": ["userId", "status"]
+    },
+    "FriendRequest": {
+      "title": "FriendRequest",
+      "description": "Scholar peer connection request",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Request ID" },
+        "fromUserId": { "type": "string", "description": "Sender UID" },
+        "fromUserName": { "type": "string", "description": "Sender name" },
+        "toUserId": { "type": "string", "description": "Target recipient UID" },
+        "status": { "type": "string", "enum": ["pending", "accepted", "declined", "canceled"], "description": "Status" },
+        "createdAt": { "type": "string", "description": "Creation timestamp" }
+      },
+      "required": ["fromUserId", "toUserId", "status"]
+    },
+    "Conversation": {
+      "title": "Conversation",
+      "description": "Direct message conversation thread",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Conversation ID" },
+        "participantIds": { "type": "array", "description": "List of participant UIDs" },
+        "updatedAt": { "type": "string", "description": "Last activity timestamp" }
+      },
+      "required": ["participantIds"]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "Chat message inside a direct conversation",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Message ID" },
+        "conversationId": { "type": "string", "description": "Conversation ID" },
+        "senderId": { "type": "string", "description": "Sender UID" },
+        "text": { "type": "string", "description": "Message text" },
+        "createdAt": { "type": "string", "description": "Timestamp" }
+      },
+      "required": ["conversationId", "senderId", "text"]
+    },
+    "Community": {
+      "title": "Community",
+      "description": "Pan-African or University Study Circle",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Community ID" },
+        "name": { "type": "string", "description": "Community name" },
+        "type": { "type": "string", "description": "pan-african or university" },
+        "description": { "type": "string", "description": "Community description" }
+      },
+      "required": ["name", "type"]
+    },
+    "SecurityAuditLog": {
+      "title": "SecurityAuditLog",
+      "description": "Security audit event log",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Scholar UID" },
+        "action": { "type": "string", "description": "Action type" },
+        "details": { "type": "string", "description": "Event details" },
+        "timestamp": { "type": "string", "description": "ISO timestamp" }
+      },
+      "required": ["uid", "action", "timestamp"]
+    },
+    "UserActivity": {
+      "title": "UserActivity",
+      "description": "Scholar activity event log stored in persistent database",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Activity log record ID" },
+        "userId": { "type": "string", "description": "Scholar UID" },
+        "userName": { "type": "string", "description": "Display name of scholar" },
+        "action": { "type": "string", "description": "Action verb or title" },
+        "actionType": { "type": "string", "description": "Category of activity (auth, course, community, profile, navigation)" },
+        "targetTitle": { "type": "string", "description": "Target resource or item name" },
+        "details": { "type": "string", "description": "Additional context or details" },
+        "createdAt": { "type": "string", "description": "ISO timestamp of the activity" },
+        "timestamp": { "type": "number", "description": "Epoch timestamp in milliseconds" }
+      },
+      "required": ["userId", "action", "createdAt"]
+    },
+    "VoiceCommandRecord": {
+      "title": "VoiceCommandRecord",
+      "description": "Persistent record of spoken voice commands and AI responses",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Voice command record ID" },
+        "userId": { "type": "string", "description": "UID of the scholar" },
+        "command": { "type": "string", "description": "Spoken user prompt or wake command" },
+        "response": { "type": "string", "description": "AI spoken response or guidance" },
+        "source": { "type": "string", "enum": ["ai-assistant", "gemini-live", "wake-word"], "description": "Voice origin" },
+        "discipline": { "type": "string", "description": "Associated academic discipline or topic" },
+        "createdAt": { "type": "string", "description": "ISO timestamp of interaction" },
+        "timestamp": { "type": "number", "description": "Epoch timestamp in milliseconds" }
+      },
+      "required": ["userId", "command", "response", "createdAt"]
+    },
+    "UserProgression": {
+      "title": "UserProgression",
+      "description": "Persistent learning, course, study group, and academic milestones progression for scholars",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "UID of the scholar" },
+        "heritageScore": { "type": "number", "description": "Heritage points accumulated (0-100+)" },
+        "heritageTier": { "type": "string", "description": "Scholar rank tier" },
+        "completedCoursesCount": { "type": "number", "description": "Total courses marked completed" },
+        "enrolledCoursesCount": { "type": "number", "description": "Total courses in progress" },
+        "studyGroupsJoinedCount": { "type": "number", "description": "Count of study groups joined" },
+        "badgesCount": { "type": "number", "description": "Count of badges earned" },
+        "courseProgress": { "type": "object", "description": "Map of courseId to progress percentage and completed module IDs" },
+        "lastActiveTab": { "type": "string", "description": "Last visited navigation tab" },
+        "updatedAt": { "type": "string", "description": "Last updated timestamp" }
+      },
+      "required": ["userId", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "Scholar user profile"
+    },
+    "/users/{userId}/progression/current": {
+      "schema": { "$ref": "#/entities/UserProgression" },
+      "description": "Scholar current academic and learning progression state"
+    },
+    "/users/{userId}/voiceCommands/{commandId}": {
+      "schema": { "$ref": "#/entities/VoiceCommandRecord" },
+      "description": "User voice command history"
+    },
+    "/voiceCommands/{commandId}": {
+      "schema": { "$ref": "#/entities/VoiceCommandRecord" },
+      "description": "Top-level collection for voice command history with user filtering"
+    },
+    "/progressions/{userId}": {
+      "schema": { "$ref": "#/entities/UserProgression" },
+      "description": "Global scholar progression database records"
+    },
+    "/users/{userId}/activities/{activityId}": {
+      "schema": { "$ref": "#/entities/UserActivity" },
+      "description": "User activity timeline records"
+    },
+    "/activities/{activityId}": {
+      "schema": { "$ref": "#/entities/UserActivity" },
+      "description": "Global user activities collection for event tracking"
+    },
+    "/presence/{userId}": {
+      "schema": { "$ref": "#/entities/Presence" },
+      "description": "Real-time presence tracking"
+    },
+    "/friendRequests/{requestId}": {
+      "schema": { "$ref": "#/entities/FriendRequest" },
+      "description": "Connection requests"
+    },
+    "/conversations/{conversationId}": {
+      "schema": { "$ref": "#/entities/Conversation" },
+      "description": "Direct chat threads"
+    },
+    "/conversations/{conversationId}/messages/{messageId}": {
+      "schema": { "$ref": "#/entities/Message" },
+      "description": "Conversation messages"
+    },
+    "/communities/{communityId}": {
+      "schema": { "$ref": "#/entities/Community" },
+      "description": "Academic communities"
+    },
+    "/security_audit_logs/{logId}": {
+      "schema": { "$ref": "#/entities/SecurityAuditLog" },
+      "description": "Audit logs"
+    }
+  }
+}

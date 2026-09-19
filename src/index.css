@@ -1,0 +1,878 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-serif: 'Playfair Display', Georgia, serif;
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --bg-overlay-opacity-dark: 0.85;
+    --bg-overlay-opacity-light: 0.90;
+    --bg-overlay-blur: 16px;
+  }
+
+  html {
+    overflow-x: hidden;
+    max-width: 100vw;
+    width: 100%;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: #0f0e0c;
+    color: #e5e2e1;
+    overflow-x: hidden;
+    max-width: 100vw;
+    width: 100%;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  #root {
+    overflow-x: hidden;
+    max-width: 100vw;
+    width: 100%;
+    min-height: 100dvh;
+  }
+
+  /* Main container touch-action for smooth native-feeling mobile scrolling */
+  main,
+  #app-main-content,
+  .main-container {
+    touch-action: pan-y;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  body.theme-light-academic {
+    background-color: #f7f5f0;
+    color: #1c1915;
+  }
+
+  h1, h2, h3, .font-headline, .font-display {
+    font-family: var(--font-serif);
+  }
+}
+
+/* Adaptive Background Overlay with Adjustable Opacity for Supreme Text Clarity */
+.bg-adaptive-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transition: all 0.5s ease-in-out;
+}
+
+body.theme-light-academic .bg-adaptive-overlay {
+  background: linear-gradient(
+    180deg,
+    rgba(247, 245, 240, 0.94) 0%,
+    rgba(247, 245, 240, var(--bg-overlay-opacity-light, 0.88)) 45%,
+    rgba(247, 245, 240, 0.96) 100%
+  );
+  backdrop-filter: blur(var(--bg-overlay-blur, 12px));
+  -webkit-backdrop-filter: blur(var(--bg-overlay-blur, 12px));
+}
+
+body:not(.theme-light-academic) .bg-adaptive-overlay {
+  background: linear-gradient(
+    180deg,
+    rgba(15, 14, 12, 0.92) 0%,
+    rgba(15, 14, 12, var(--bg-overlay-opacity-dark, 0.82)) 45%,
+    rgba(15, 14, 12, 0.95) 100%
+  );
+  backdrop-filter: blur(var(--bg-overlay-blur, 14px));
+  -webkit-backdrop-filter: blur(var(--bg-overlay-blur, 14px));
+}
+
+/* Text Readability Enhancers over Background Imagery */
+.text-contrast-title {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+body.theme-light-academic .text-contrast-title {
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.6);
+}
+
+.text-contrast-body {
+  letter-spacing: 0.01em;
+}
+
+.font-serif-title {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+.font-sans-body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+.font-script, .font-calligraphy {
+  font-family: 'Caveat', 'Alex Brush', 'Great Vibes', cursive;
+}
+
+/* Glassmorphic Safari Card Styling (Deep Night) */
+.safari-glass {
+  background: rgba(24, 22, 19, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(212, 175, 55, 0.22);
+}
+
+.safari-glass-subtle {
+  background: rgba(28, 25, 22, 0.65);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(212, 175, 55, 0.18);
+}
+
+.safari-glass-hover {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.safari-glass-hover:hover {
+  background: rgba(36, 32, 27, 0.88);
+  border-color: rgba(242, 202, 80, 0.55);
+  box-shadow: 0 12px 36px -8px rgba(0, 0, 0, 0.6), 0 0 20px -2px rgba(212, 175, 55, 0.15);
+}
+
+/* African Geometric Kente & Diamond Textures */
+.african-pattern-bg {
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l15 30-15 30-15-30z' fill='%23d4af37' fill-opacity='0.035'/%3E%3C/svg%3E");
+}
+
+.african-kente-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h20v20H0zM20 20h20v20H20z' fill='%23d4af37' fill-opacity='0.04'/%3E%3C/svg%3E");
+}
+
+.african-grid-dots {
+  background-image: radial-gradient(circle at center, rgba(212, 175, 55, 0.15) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Custom scrollbars (Deep Night) */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+/* Animations for Conversational UX */
+@keyframes messageFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(12px) scale(0.985);
+  }
+  60% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes typingBounce {
+  0%, 80%, 100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  40% {
+    transform: translateY(-6px);
+    opacity: 1;
+  }
+}
+
+@keyframes subtleGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(147, 51, 234, 0.25);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(168, 85, 247, 0.45);
+  }
+}
+
+.animate-message-fade-in {
+  animation: messageFadeIn 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-typing-dot-1 {
+  animation: typingBounce 1.4s infinite ease-in-out both;
+  animation-delay: 0s;
+}
+
+.animate-typing-dot-2 {
+  animation: typingBounce 1.4s infinite ease-in-out both;
+  animation-delay: 0.2s;
+}
+
+.animate-typing-dot-3 {
+  animation: typingBounce 1.4s infinite ease-in-out both;
+  animation-delay: 0.4s;
+}
+
+.animate-ai-glow {
+  animation: subtleGlow 3s infinite ease-in-out;
+}
+
+/* Prism Syntax Highlighting Tokens (Dark & Rich Contrast) */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #f1f5f9;
+  font-family: "Fira Code", "Cascadia Code", "JetBrains Mono", Consolas, Monaco, "Courier New", Courier, monospace;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #6ee7b7;
+  font-style: italic;
+  opacity: 0.85;
+}
+
+.token.punctuation {
+  color: #94a3b8;
+}
+
+.token.namespace {
+  opacity: 0.7;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol {
+  color: #38bdf8;
+  font-weight: 500;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: #fde047;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+  color: #f472b6;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: #c084fc;
+  font-weight: 600;
+}
+
+.token.function,
+.token.class-name {
+  color: #fb923c;
+  font-weight: 600;
+}
+
+.token.regex,
+.token.important {
+  color: #e879f9;
+}
+
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+.token.deleted {
+  color: #f87171;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(19, 17, 15, 0.8);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3c3427;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #d4af37;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* =========================================================
+   LIGHT ACADEMIC MODE OVERRIDES (High-Ambient-Light Readability)
+   ========================================================= */
+
+.theme-light-academic {
+  color-scheme: light;
+}
+
+body.theme-light-academic {
+  background-color: #f7f5f0 !important;
+  color: #1c150c !important;
+}
+
+/* Glassmorphic Safari Card Styling (Light Academic) */
+.theme-light-academic .safari-glass {
+  background: rgba(255, 255, 255, 0.98) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(138, 100, 20, 0.25) !important;
+  box-shadow: 0 4px 24px -2px rgba(43, 34, 22, 0.08), 0 1px 4px rgba(0, 0, 0, 0.04) !important;
+}
+
+.theme-light-academic .safari-glass-subtle {
+  background: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(138, 100, 20, 0.2) !important;
+  box-shadow: 0 2px 12px rgba(43, 34, 22, 0.05) !important;
+}
+
+.theme-light-academic .safari-glass-hover:hover {
+  background: #ffffff !important;
+  border-color: rgba(138, 100, 20, 0.55) !important;
+  box-shadow: 0 14px 36px -4px rgba(43, 34, 22, 0.12), 0 0 16px -2px rgba(138, 100, 20, 0.15) !important;
+}
+
+/* Navigation Shell in Light Academic Mode */
+.theme-light-academic #app-main-header {
+  background: rgba(255, 255, 255, 0.98) !important;
+  border-bottom-color: rgba(138, 100, 20, 0.22) !important;
+  box-shadow: 0 4px 20px rgba(43, 34, 22, 0.06) !important;
+}
+
+.theme-light-academic #app-sidebar-nav {
+  background: rgba(253, 252, 249, 0.98) !important;
+  border-right-color: rgba(138, 100, 20, 0.2) !important;
+  box-shadow: 6px 0 28px rgba(43, 34, 22, 0.05) !important;
+}
+
+.theme-light-academic #mobile-bottom-navigation {
+  background: rgba(255, 255, 255, 0.98) !important;
+  border-top-color: rgba(138, 100, 20, 0.2) !important;
+  box-shadow: 0 -4px 20px rgba(43, 34, 22, 0.06) !important;
+}
+
+/* Text Hierarchy & High Contrast in Light Academic Mode (Deep Blackish Brown) */
+.theme-light-academic,
+.theme-light-academic p,
+.theme-light-academic label {
+  color: #1c150c;
+}
+
+.theme-light-academic h1,
+.theme-light-academic h2,
+.theme-light-academic h3,
+.theme-light-academic h4,
+.theme-light-academic h5,
+.theme-light-academic h6,
+.theme-light-academic .font-serif-title {
+  color: #140e07 !important;
+}
+
+.theme-light-academic .text-\[\#e5e2e1\],
+.theme-light-academic .text-\[\#e7e5e4\],
+.theme-light-academic .text-\[\#e8e4dc\],
+.theme-light-academic .text-\[\#f5f5f4\],
+.theme-light-academic .text-\[\#f5f2eb\],
+.theme-light-academic .text-\[\#ded8cb\] {
+  color: #18120a !important;
+}
+
+.theme-light-academic .text-\[\#d0c5af\],
+.theme-light-academic .text-\[\#d6d3d1\],
+.theme-light-academic .text-\[\#bfb8a8\],
+.theme-light-academic .text-\[\#c5bcab\],
+.theme-light-academic .text-\[\#c9c2b3\],
+.theme-light-academic .text-\[\#b8ad96\],
+.theme-light-academic .text-\[\#b8af9d\] {
+  color: #2e2417 !important;
+}
+
+.theme-light-academic .text-\[\#d0c5af\]\/70,
+.theme-light-academic .text-\[\#d0c5af\]\/80,
+.theme-light-academic .text-\[\#d0c5af\]\/90 {
+  color: #382c1e !important;
+}
+
+/* Secondary & Muted Labels - Blackish Brown (Not Light Brown) */
+.theme-light-academic .text-\[\#99907c\],
+.theme-light-academic .text-\[\#a8a29e\],
+.theme-light-academic .text-\[\#8c827a\],
+.theme-light-academic .text-\[\#78716c\],
+.theme-light-academic .text-\[\#787164\],
+.theme-light-academic .text-\[\#7a6f5d\],
+.theme-light-academic .text-\[\#7d7565\],
+.theme-light-academic .text-\[\#7d7568\],
+.theme-light-academic .text-\[\#8a8275\],
+.theme-light-academic .text-\[\#a89e8b\],
+.theme-light-academic .text-\[\#a89f8d\] {
+  color: #524332 !important;
+}
+
+/* Accent Colors tuned for Light Mode legibility */
+.theme-light-academic .text-\[\#f2ca50\],
+.theme-light-academic .text-\[\#ffd768\],
+.theme-light-academic .text-\[\#ffe088\],
+.theme-light-academic .text-\[\#d4af37\],
+.theme-light-academic .text-\[\#f59e0b\] {
+  color: #8a5700 !important;
+}
+
+.theme-light-academic .text-\[\#ffb4ab\] {
+  color: #b3261e !important;
+}
+
+.theme-light-academic .text-\[\#c084fc\],
+.theme-light-academic .text-\[\#a855f7\],
+.theme-light-academic .text-\[\#c4b5fd\],
+.theme-light-academic .text-\[\#d8b4fe\],
+.theme-light-academic .text-\[\#e2d5ec\],
+.theme-light-academic .text-\[\#e9d5ff\] {
+  color: #6b21a8 !important;
+}
+
+.theme-light-academic .text-\[\#4ade80\],
+.theme-light-academic .text-\[\#34d399\],
+.theme-light-academic .text-\[\#a5d6a7\] {
+  color: #15803d !important;
+}
+
+.theme-light-academic .text-\[\#38bdf8\] {
+  color: #0369a1 !important;
+}
+
+/* =========================================================
+   Primary Card Surfaces & Containers in Light Academic Mode (Pure Crisp White)
+   ========================================================= */
+.theme-light-academic .bg-\[\#000000\],
+.theme-light-academic .bg-\[\#090807\],
+.theme-light-academic .bg-\[\#0a0908\],
+.theme-light-academic .bg-\[\#0c0a08\],
+.theme-light-academic .bg-\[\#0c0a09\],
+.theme-light-academic .bg-\[\#0c0b09\],
+.theme-light-academic .bg-\[\#0c0b0a\],
+.theme-light-academic .bg-\[\#0d0914\],
+.theme-light-academic .bg-\[\#0d0c0a\],
+.theme-light-academic .bg-\[\#0e0c09\],
+.theme-light-academic .bg-\[\#0f0c16\],
+.theme-light-academic .bg-\[\#0f0e0c\],
+.theme-light-academic .bg-\[\#100720\],
+.theme-light-academic .bg-\[\#100e0c\],
+.theme-light-academic .bg-\[\#100f0d\],
+.theme-light-academic .bg-\[\#110f0c\],
+.theme-light-academic .bg-\[\#120f0c\],
+.theme-light-academic .bg-\[\#12100d\],
+.theme-light-academic .bg-\[\#12110e\],
+.theme-light-academic .bg-\[\#130f1c\],
+.theme-light-academic .bg-\[\#131313\],
+.theme-light-academic .bg-\[\#140f20\],
+.theme-light-academic .bg-\[\#14110e\],
+.theme-light-academic .bg-\[\#14120e\],
+.theme-light-academic .bg-\[\#14120f\],
+.theme-light-academic .bg-\[\#141210\],
+.theme-light-academic .bg-\[\#16120d\],
+.theme-light-academic .bg-\[\#161220\],
+.theme-light-academic .bg-\[\#16130f\],
+.theme-light-academic .bg-\[\#161410\],
+.theme-light-academic .bg-\[\#161412\],
+.theme-light-academic .bg-\[\#170e28\],
+.theme-light-academic .bg-\[\#171026\],
+.theme-light-academic .bg-\[\#17121c\],
+.theme-light-academic .bg-\[\#171410\],
+.theme-light-academic .bg-\[\#181126\],
+.theme-light-academic .bg-\[\#18140f\],
+.theme-light-academic .bg-\[\#181410\],
+.theme-light-academic .bg-\[\#181510\],
+.theme-light-academic .bg-\[\#181511\],
+.theme-light-academic .bg-\[\#181512\],
+.theme-light-academic .bg-\[\#181613\],
+.theme-light-academic .bg-\[\#181614\],
+.theme-light-academic .bg-\[\#191510\],
+.theme-light-academic .bg-\[\#191611\],
+.theme-light-academic .bg-\[\#191612\],
+.theme-light-academic .bg-\[\#1a1420\],
+.theme-light-academic .bg-\[\#1a150e\],
+.theme-light-academic .bg-\[\#1a1510\],
+.theme-light-academic .bg-\[\#1a1611\],
+.theme-light-academic .bg-\[\#1a1612\],
+.theme-light-academic .bg-\[\#1a1712\],
+.theme-light-academic .bg-\[\#1a1713\],
+.theme-light-academic .bg-\[\#1a1815\],
+.theme-light-academic .bg-\[\#1b1220\],
+.theme-light-academic .bg-\[\#1b1712\],
+.theme-light-academic .bg-\[\#1b1813\],
+.theme-light-academic .bg-\[\#1b1b1b\],
+.theme-light-academic .bg-\[\#1c1710\],
+.theme-light-academic .bg-\[\#1c1813\],
+.theme-light-academic .bg-\[\#1c1914\],
+.theme-light-academic .bg-\[\#1c1915\],
+.theme-light-academic .bg-\[\#1c1917\],
+.theme-light-academic .bg-\[\#1c1a17\],
+.theme-light-academic .bg-\[\#1d162b\],
+.theme-light-academic .bg-\[\#1d1813\],
+.theme-light-academic .bg-\[\#1e1430\],
+.theme-light-academic .bg-\[\#1e1814\],
+.theme-light-academic .bg-\[\#1e1a14\],
+.theme-light-academic .bg-\[\#1e1a15\],
+.theme-light-academic .bg-\[\#1e1b16\],
+.theme-light-academic .bg-\[\#1f1a14\],
+.theme-light-academic .bg-\[\#1f1b15\],
+.theme-light-academic .bg-\[\#1f1b16\],
+.theme-light-academic .bg-\[\#1f1c17\],
+.theme-light-academic .bg-\[\#292524\],
+.theme-light-academic #all-pathways-left-drawer {
+  background-color: #ffffff !important;
+  color: #1c150c !important;
+}
+
+/* Semi-transparent Overlay Panels */
+.theme-light-academic .bg-\[\#000000\]\/10,
+.theme-light-academic .bg-\[\#0c0a09\]\/20,
+.theme-light-academic .bg-\[\#0c0a09\]\/95,
+.theme-light-academic .bg-\[\#0c0b09\]\/50,
+.theme-light-academic .bg-\[\#0f0c16\]\/95,
+.theme-light-academic .bg-\[\#0f0e0c\]\/95,
+.theme-light-academic .bg-\[\#100e0c\]\/90,
+.theme-light-academic .bg-\[\#100f0d\]\/85,
+.theme-light-academic .bg-\[\#100f0d\]\/90,
+.theme-light-academic .bg-\[\#120f0c\]\/60,
+.theme-light-academic .bg-\[\#12100d\]\/60,
+.theme-light-academic .bg-\[\#12100d\]\/90,
+.theme-light-academic .bg-\[\#130f1c\]\/95,
+.theme-light-academic .bg-\[\#131313\]\/60,
+.theme-light-academic .bg-\[\#140f20\]\/95,
+.theme-light-academic .bg-\[\#14120e\]\/60,
+.theme-light-academic .bg-\[\#14120e\]\/80,
+.theme-light-academic .bg-\[\#14120e\]\/90,
+.theme-light-academic .bg-\[\#14120e\]\/95,
+.theme-light-academic .bg-\[\#14120f\]\/80,
+.theme-light-academic .bg-\[\#14120f\]\/90,
+.theme-light-academic .bg-\[\#141210\]\/90,
+.theme-light-academic .bg-\[\#161220\]\/95,
+.theme-light-academic .bg-\[\#161410\]\/85,
+.theme-light-academic .bg-\[\#161410\]\/95,
+.theme-light-academic .bg-\[\#170e28\]\/95,
+.theme-light-academic .bg-\[\#17121c\]\/80,
+.theme-light-academic .bg-\[\#181126\]\/95,
+.theme-light-academic .bg-\[\#181511\]\/90,
+.theme-light-academic .bg-\[\#181511\]\/98,
+.theme-light-academic .bg-\[\#181614\]\/95,
+.theme-light-academic .bg-\[\#191612\]\/90,
+.theme-light-academic .bg-\[\#1a1712\]\/90,
+.theme-light-academic .bg-\[\#1a1713\]\/60,
+.theme-light-academic .bg-\[\#1a1713\]\/80,
+.theme-light-academic .bg-\[\#1b1b1b\]\/90,
+.theme-light-academic .bg-\[\#1c1915\]\/85,
+.theme-light-academic .bg-\[\#1c1917\]\/80,
+.theme-light-academic .bg-\[\#1c1917\]\/90,
+.theme-light-academic .bg-\[\#1e1430\]\/90,
+.theme-light-academic .bg-\[\#1e1b16\]\/70,
+.theme-light-academic .bg-\[\#1e1b16\]\/80,
+.theme-light-academic .bg-\[\#1e1b16\]\/90,
+.theme-light-academic .bg-\[\#201c17\]\/60,
+.theme-light-academic .bg-\[\#201c17\]\/80,
+.theme-light-academic .bg-\[\#201c17\]\/90,
+.theme-light-academic .bg-\[\#201d18\]\/60,
+.theme-light-academic .bg-\[\#201d18\]\/70,
+.theme-light-academic .bg-\[\#20201f\]\/60,
+.theme-light-academic .bg-\[\#24201a\]\/80,
+.theme-light-academic .bg-\[\#24201a\]\/90,
+.theme-light-academic .bg-\[\#281b36\]\/60,
+.theme-light-academic .bg-\[\#28231c\]\/90,
+.theme-light-academic .bg-\[\#353535\]\/60,
+.theme-light-academic .bg-\[\#353535\]\/70,
+.theme-light-academic .bg-\[\#381e4d\]\/60,
+.theme-light-academic .bg-\[\#221e18\]\/90 {
+  background-color: rgba(255, 255, 255, 0.96) !important;
+}
+
+/* STEM Violet Badges in Light Academic Mode */
+.theme-light-academic .bg-\[\#9333ea\]\/10,
+.theme-light-academic .bg-\[\#9333ea\]\/15,
+.theme-light-academic .bg-\[\#9333ea\]\/20,
+.theme-light-academic .bg-\[\#9333ea\]\/30,
+.theme-light-academic .bg-\[\#7c3aed\]\/40,
+.theme-light-academic .bg-\[\#6b21a8\]\/40 {
+  background-color: rgba(147, 51, 234, 0.12) !important;
+  color: #6b21a8 !important;
+  border-color: rgba(147, 51, 234, 0.3) !important;
+}
+
+/* =========================================================
+   Secondary Insets, Chips, Badges & Sub-Containers (Warm Cream Surface)
+   ========================================================= */
+.theme-light-academic .bg-\[\#201827\],
+.theme-light-academic .bg-\[\#201c15\],
+.theme-light-academic .bg-\[\#201c16\],
+.theme-light-academic .bg-\[\#201c17\],
+.theme-light-academic .bg-\[\#201c18\],
+.theme-light-academic .bg-\[\#201c19\],
+.theme-light-academic .bg-\[\#201d18\],
+.theme-light-academic .bg-\[\#20201f\],
+.theme-light-academic .bg-\[\#221b12\],
+.theme-light-academic .bg-\[\#221c15\],
+.theme-light-academic .bg-\[\#221e17\],
+.theme-light-academic .bg-\[\#221e18\],
+.theme-light-academic .bg-\[\#231d14\],
+.theme-light-academic .bg-\[\#231d16\],
+.theme-light-academic .bg-\[\#231e18\],
+.theme-light-academic .bg-\[\#231f19\],
+.theme-light-academic .bg-\[\#241e16\],
+.theme-light-academic .bg-\[\#241e17\],
+.theme-light-academic .bg-\[\#241f18\],
+.theme-light-academic .bg-\[\#241f19\],
+.theme-light-academic .bg-\[\#24201a\],
+.theme-light-academic .bg-\[\#25172b\],
+.theme-light-academic .bg-\[\#25173c\],
+.theme-light-academic .bg-\[\#251b38\],
+.theme-light-academic .bg-\[\#251e30\],
+.theme-light-academic .bg-\[\#251f17\],
+.theme-light-academic .bg-\[\#252018\],
+.theme-light-academic .bg-\[\#252019\],
+.theme-light-academic .bg-\[\#25211b\],
+.theme-light-academic .bg-\[\#25221d\],
+.theme-light-academic .bg-\[\#261536\],
+.theme-light-academic .bg-\[\#262017\],
+.theme-light-academic .bg-\[\#26221c\],
+.theme-light-academic .bg-\[\#27173e\],
+.theme-light-academic .bg-\[\#281845\],
+.theme-light-academic .bg-\[\#281b36\],
+.theme-light-academic .bg-\[\#282115\],
+.theme-light-academic .bg-\[\#282116\],
+.theme-light-academic .bg-\[\#282117\],
+.theme-light-academic .bg-\[\#282218\],
+.theme-light-academic .bg-\[\#28221a\],
+.theme-light-academic .bg-\[\#28231c\],
+.theme-light-academic .bg-\[\#28241c\],
+.theme-light-academic .bg-\[\#28241d\],
+.theme-light-academic .bg-\[\#2a2213\],
+.theme-light-academic .bg-\[\#2a2217\],
+.theme-light-academic .bg-\[\#2a221b\],
+.theme-light-academic .bg-\[\#2a241b\],
+.theme-light-academic .bg-\[\#2a2a2a\],
+.theme-light-academic .bg-\[\#2b1d3a\],
+.theme-light-academic .bg-\[\#2b1e38\],
+.theme-light-academic .bg-\[\#2b1f48\],
+.theme-light-academic .bg-\[\#2b2315\],
+.theme-light-academic .bg-\[\#2b2316\],
+.theme-light-academic .bg-\[\#2b2319\],
+.theme-light-academic .bg-\[\#2b2419\],
+.theme-light-academic .bg-\[\#2b251d\],
+.theme-light-academic .bg-\[\#2b251e\],
+.theme-light-academic .bg-\[\#2c2214\],
+.theme-light-academic .bg-\[\#2c2419\],
+.theme-light-academic .bg-\[\#2c251b\],
+.theme-light-academic .bg-\[\#2c251d\],
+.theme-light-academic .bg-\[\#2c261c\],
+.theme-light-academic .bg-\[\#2c261e\],
+.theme-light-academic .bg-\[\#2c2620\],
+.theme-light-academic .bg-\[\#2d1417\],
+.theme-light-academic .bg-\[\#2d251a\],
+.theme-light-academic .bg-\[\#2d261d\],
+.theme-light-academic .bg-\[\#2d271f\],
+.theme-light-academic .bg-\[\#2e141c\],
+.theme-light-academic .bg-\[\#2e1c4a\],
+.theme-light-academic .bg-\[\#2e261a\],
+.theme-light-academic .bg-\[\#2e261d\],
+.theme-light-academic .bg-\[\#2e271c\],
+.theme-light-academic .bg-\[\#2e271e\],
+.theme-light-academic .bg-\[\#2e2820\],
+.theme-light-academic .bg-\[\#2e2920\],
+.theme-light-academic .bg-\[\#2f271c\],
+.theme-light-academic .bg-\[\#2f2820\],
+.theme-light-academic .bg-\[\#30261c\],
+.theme-light-academic .bg-\[\#322c22\],
+.theme-light-academic .bg-\[\#322c24\],
+.theme-light-academic .bg-\[\#332b1f\],
+.theme-light-academic .bg-\[\#332e26\],
+.theme-light-academic .bg-\[\#341e54\],
+.theme-light-academic .bg-\[\#353535\],
+.theme-light-academic .bg-\[\#381e40\],
+.theme-light-academic .bg-\[\#381e4d\],
+.theme-light-academic .bg-\[\#382260\],
+.theme-light-academic .bg-\[\#383022\],
+.theme-light-academic .bg-\[\#383126\],
+.theme-light-academic .bg-\[\#3b1b63\],
+.theme-light-academic .bg-\[\#3b2266\],
+.theme-light-academic .bg-\[\#3b284e\],
+.theme-light-academic .bg-\[\#3c2a1a\],
+.theme-light-academic .bg-\[\#3d3429\],
+.theme-light-academic .bg-\[\#3c352f\] {
+  background-color: #f2ede4 !important;
+  color: #1c150c !important;
+}
+
+/* Clear dark linear gradients on cards & replace with clean light styling */
+.theme-light-academic .from-\[\#1c1917\],
+.theme-light-academic .from-\[\#141210\],
+.theme-light-academic .from-\[\#161412\],
+.theme-light-academic .from-\[\#14120f\],
+.theme-light-academic .from-\[\#0d0c0a\],
+.theme-light-academic .from-\[\#1a1713\],
+.theme-light-academic .from-\[\#12100d\] {
+  --tw-gradient-from: #ffffff !important;
+  --tw-gradient-stops: var(--tw-gradient-from), #faf7f2, var(--tw-gradient-to, #f4f0e6) !important;
+}
+
+.theme-light-academic .to-\[\#141210\],
+.theme-light-academic .to-\[\#161412\],
+.theme-light-academic .to-\[\#0d0c0a\],
+.theme-light-academic .to-\[\#12100d\],
+.theme-light-academic .to-\[\#181511\],
+.theme-light-academic .to-\[\#1c1917\] {
+  --tw-gradient-to: #f3efe6 !important;
+}
+
+/* Hover States */
+.theme-light-academic .hover\:bg-\[\#2a2a2a\]:hover,
+.theme-light-academic .hover\:bg-\[\#2e2820\]:hover,
+.theme-light-academic .hover\:bg-\[\#24201a\]:hover,
+.theme-light-academic .hover\:bg-\[\#2c261e\]:hover,
+.theme-light-academic .hover\:bg-\[\#1f1c17\]:hover,
+.theme-light-academic .hover\:bg-\[\#2e261a\]:hover,
+.theme-light-academic .hover\:bg-\[\#231e18\]:hover,
+.theme-light-academic .hover\:bg-\[\#2c2620\]:hover,
+.theme-light-academic .hover\:bg-\[\#1c1a17\]:hover,
+.theme-light-academic .hover\:bg-\[\#28221a\]:hover,
+.theme-light-academic .hover\:bg-\[\#262017\]:hover {
+  background-color: #e5dec9 !important;
+}
+
+/* Accent Badges, Pills & Solid Buttons in Light Academic Mode */
+.theme-light-academic .bg-\[\#f2ca50\]\/10,
+.theme-light-academic .bg-\[\#f2ca50\]\/15,
+.theme-light-academic .bg-\[\#f2ca50\]\/20,
+.theme-light-academic .bg-\[\#d4af37\]\/15,
+.theme-light-academic .bg-\[\#d4af37\]\/20,
+.theme-light-academic .bg-\[\#d4af37\]\/25 {
+  background-color: rgba(184, 134, 11, 0.14) !important;
+  color: #784900 !important;
+  border-color: rgba(184, 134, 11, 0.35) !important;
+}
+
+.theme-light-academic .bg-\[\#f2ca50\],
+.theme-light-academic .bg-\[\#d4af37\],
+.theme-light-academic .bg-\[\#e5be42\] {
+  background-color: #8c5b05 !important;
+  color: #ffffff !important;
+}
+
+.theme-light-academic .hover\:bg-\[\#ffe088\]:hover,
+.theme-light-academic .hover\:bg-\[\#f2ca50\]:hover,
+.theme-light-academic .hover\:bg-\[\#e5be42\]:hover {
+  background-color: #6d4400 !important;
+}
+
+/* Input Fields & Textareas in Light Academic Mode */
+.theme-light-academic input,
+.theme-light-academic textarea,
+.theme-light-academic select {
+  background-color: #ffffff !important;
+  color: #1c150c !important;
+  border-color: rgba(138, 100, 20, 0.35) !important;
+}
+
+.theme-light-academic input::placeholder,
+.theme-light-academic textarea::placeholder {
+  color: #635340 !important;
+}
+
+/* Border Hierarchy in Light Academic Mode */
+.theme-light-academic .border-\[\#d4af37\]\/20,
+.theme-light-academic .border-\[\#d4af37\]\/25,
+.theme-light-academic .border-\[\#d4af37\]\/30,
+.theme-light-academic .border-\[\#d4af37\]\/35,
+.theme-light-academic .border-\[\#d4af37\]\/40,
+.theme-light-academic .border-\[\#d4af37\]\/50,
+.theme-light-academic .border-\[\#4d4635\]\/20,
+.theme-light-academic .border-\[\#4d4635\]\/25,
+.theme-light-academic .border-\[\#4d4635\]\/30,
+.theme-light-academic .border-\[\#4d4635\]\/40,
+.theme-light-academic .border-\[\#3c352f\],
+.theme-light-academic .border-\[\#292524\],
+.theme-light-academic .border-\[\#353535\] {
+  border-color: rgba(138, 100, 20, 0.22) !important;
+}
+
+/* Scrollbars in Light Academic Mode */
+.theme-light-academic ::-webkit-scrollbar-track {
+  background: #f0ece1;
+}
+
+.theme-light-academic ::-webkit-scrollbar-thumb {
+  background: #c0b094;
+}
+
+.theme-light-academic ::-webkit-scrollbar-thumb:hover {
+  background: #8c5b05;
+}
+
+.theme-light-academic ::-webkit-scrollbar-thumb:hover {
+  background: #8c5b05;
+}
+
+/* Leaflet Custom Styling */
+.leaflet-popup-content-wrapper {
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+.leaflet-popup-content {
+  margin: 0 !important;
+  line-height: 1.4 !important;
+}
+
+.leaflet-popup-tip-container {
+  display: none !important;
+}
+
+.leaflet-popup-close-button {
+  color: #f2ca50 !important;
+  padding: 6px 8px !important;
+  font-size: 16px !important;
+  top: 6px !important;
+  right: 6px !important;
+  z-index: 10 !important;
+}
+
+.leaflet-control-zoom a {
+  background-color: #181614 !important;
+  color: #f2ca50 !important;
+  border-color: #3c352f !important;
+}
+
+.leaflet-control-zoom a:hover {
+  background-color: #2a241b !important;
+  color: #ffe088 !important;
+}
+
+.leaflet-control-attribution {
+  background: rgba(12, 10, 9, 0.75) !important;
+  color: #78716c !important;
+  font-size: 9px !important;
+}
+
+.leaflet-control-attribution a {
+  color: #d4af37 !important;
+}
+
+.custom-leaflet-marker {
+  background: transparent !important;
+  border: none !important;
+}
+

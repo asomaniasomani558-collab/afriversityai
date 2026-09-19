@@ -1,0 +1,11 @@
+{
+  "name": "Remix AfriVersty",
+  "description": "The premier academic and innovation platform for African students, universities, and scholars. Rooted in Africa, built for the world.",
+  "requestFramePermissions": [
+    "microphone",
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

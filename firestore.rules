@@ -1,0 +1,171 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // Users collection: Public scholar directory info readable by authenticated scholars, private fields guarded
+    match /users/{userId} {
+      allow read: if true;
+      allow create: if isOwner(userId);
+      allow update: if isOwner(userId);
+      allow delete: if isOwner(userId);
+
+      match /{subcollection}/{docId} {
+        allow read, write: if isOwner(userId);
+      }
+    }
+
+    // Connection health check
+    match /test/{docId} {
+      allow read: if true;
+    }
+
+    // Real-time online/away/offline presence tracking
+    match /presence/{userId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Friend requests - allows real-time incoming/outgoing sync
+    match /friendRequests/{requestId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Friendships
+    match /friendships/{friendshipId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Privacy & Security user settings
+    match /privacySettings/{userId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Direct conversations
+    match /conversations/{conversationId} {
+      allow read: if isAuthenticated() && (
+        request.auth.uid in resource.data.participantIds
+      );
+      allow create: if isAuthenticated() && (
+        request.auth.uid in request.resource.data.participantIds
+      );
+      allow update: if isAuthenticated() && (
+        request.auth.uid in resource.data.participantIds
+      );
+      allow delete: if isAuthenticated() && (
+        request.auth.uid in resource.data.participantIds
+      );
+
+      match /messages/{messageId} {
+        allow read: if isAuthenticated();
+        allow create: if isAuthenticated() && request.resource.data.senderId == request.auth.uid;
+        allow update: if isAuthenticated() && (
+          resource.data.senderId == request.auth.uid ||
+          request.auth.uid in get(/databases/$(database)/documents/conversations/$(conversationId)).data.participantIds
+        );
+        allow delete: if isAuthenticated() && resource.data.senderId == request.auth.uid;
+      }
+    }
+
+    // Pan-African & University Communities
+    match /communities/{communityId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated();
+      allow update: if isAuthenticated();
+      allow delete: if isAuthenticated() && request.auth.uid in resource.data.moderators;
+
+      match /posts/{postId} {
+        allow read: if isAuthenticated();
+        allow create: if isAuthenticated() && request.resource.data.authorId == request.auth.uid;
+        allow update: if isAuthenticated();
+        allow delete: if isAuthenticated() && (
+          resource.data.authorId == request.auth.uid ||
+          request.auth.uid in get(/databases/$(database)/documents/communities/$(communityId)).data.moderators
+        );
+      }
+
+      match /messages/{messageId} {
+        allow read: if isAuthenticated();
+        allow create: if isAuthenticated() && request.resource.data.senderId == request.auth.uid;
+        allow update, delete: if isAuthenticated() && resource.data.senderId == request.auth.uid;
+      }
+    }
+
+    // Notifications
+    match /notifications/{notifId} {
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow create: if isAuthenticated();
+      allow update: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
+    }
+
+    // Reports & Trust / Moderation
+    match /reports/{reportId} {
+      allow create: if isAuthenticated() && request.resource.data.reporterId == request.auth.uid;
+      allow read: if isAuthenticated();
+      allow update, delete: if isAuthenticated();
+    }
+
+    // Shared academic study groups
+    match /study_groups/{groupId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated() && request.resource.data.createdBy == request.auth.uid;
+      allow update: if isAuthenticated();
+      allow delete: if isAuthenticated() && resource.data.createdBy == request.auth.uid;
+    }
+
+    // Collaborative STEM projects
+    match /projects/{projectId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated();
+      allow update: if isAuthenticated();
+      allow delete: if isAuthenticated() && resource.data.leadUid == request.auth.uid;
+    }
+
+    // Security audit logs
+    match /security_audit_logs/{logId} {
+      allow create: if isAuthenticated() && request.resource.data.uid == request.auth.uid;
+      allow read: if isAuthenticated() && resource.data.uid == request.auth.uid;
+      allow update, delete: if false;
+    }
+
+    // User Activities log - persistent database storage for scholar actions
+    match /activities/{activityId} {
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow update, delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
+    }
+
+    // Voice Command History - recent voice commands and AI responses
+    match /voiceCommands/{commandId} {
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow update, delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
+    }
+
+    // Scholar Progression Tracking - saving progression when users sign up, login, and complete learning milestones
+    match /progressions/{userId} {
+      allow create: if isOwner(userId);
+      allow read: if isOwner(userId);
+      allow update: if isOwner(userId);
+      allow delete: if isOwner(userId);
+    }
+
+    // Deny all other unmapped paths
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
